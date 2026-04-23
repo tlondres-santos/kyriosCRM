@@ -1,4 +1,4 @@
-# PROJECT ARCHITECTURE: PipeFlow CRM
+# PROJECT ARCHITECTURE: Kyrios CRM
 
 ## 1. CONTEXT & PROBLEM
 
@@ -6,7 +6,7 @@ Pequenas e médias empresas, freelancers e times de vendas perdem oportunidades 
 
 ## 2. PROPOSED SOLUTION
 
-Construir o PipeFlow CRM — uma plataforma web SaaS de gestão de clientes e vendas, multi-empresa, com pipeline visual Kanban, gestão completa de leads e negócios, registro de interações e integração de pagamento para monetização.
+Construir o Kyrios CRM — uma plataforma web SaaS de gestão de clientes e vendas, multi-empresa, com pipeline visual Kanban, gestão completa de leads e negócios, registro de interações e integração de pagamento para monetização.
 
 A solução incluirá:
 
@@ -106,7 +106,7 @@ A solução incluirá:
 
 ### Landing Page
 
-- Página pública de apresentação do PipeFlow CRM
+- Página pública de apresentação do Kyrios CRM
 
 - Seções: hero, funcionalidades, planos/preços, CTA
 

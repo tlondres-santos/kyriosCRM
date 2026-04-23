@@ -48,7 +48,7 @@
 ### M03 · Landing Page
 **Branch:** `feat/landing-page`
 
-**Objective:** Deliver the public marketing page for PipeFlow CRM — the first thing a visitor sees. No backend required.
+**Objective:** Deliver the public marketing page for Kyrios CRM — the first thing a visitor sees. No backend required.
 
 **Deliverables:**
 - [ ] `src/app/page.tsx` — public landing page (Server Component)
@@ -185,7 +185,7 @@
 - [ ] Wire forgot-password to `supabase.auth.resetPasswordForEmail()`
 - [ ] Wire reset-password to `supabase.auth.updateUser()`
 - [ ] Workspace switcher in sidebar reads real user memberships
-- [ ] Active workspace stored in `localStorage` (key: `pipeflow_workspace_id`)
+- [ ] Active workspace stored in `localStorage` (key: `kyrios_workspace_id`)
 - [ ] `tsc --noEmit` passes
 
 **Final commit:** `feat: Supabase auth, core schema (workspaces + members) and session management`
@@ -355,7 +355,7 @@
 ### M17 · Production Deploy
 **Branch:** `deploy/production`
 
-**Objective:** Ship PipeFlow CRM to production on Vercel + Supabase with all environment variables configured and smoke-tested.
+**Objective:** Ship Kyrios CRM to production on Vercel + Supabase with all environment variables configured and smoke-tested.
 
 **Deliverables:**
 - [ ] Create GitHub repository, push `main` branch

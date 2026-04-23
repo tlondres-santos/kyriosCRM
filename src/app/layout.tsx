@@ -5,8 +5,8 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "PipeFlow CRM",
-  description: "Sales pipeline management for SMBs and sales teams",
+  title: "Kyrios CRM",
+  description: "Gestão de pipeline de vendas para PMEs e times comerciais",
 };
 
 export default function RootLayout({

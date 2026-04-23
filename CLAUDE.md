@@ -2,7 +2,7 @@
 
 ## Overview
 
-PipeFlow CRM is a multi-tenant SaaS platform for sales pipeline management targeting SMBs, freelancers, and sales teams. It provides a Kanban-style deal pipeline, lead/contact management, activity tracking, team collaboration via workspaces, and monetization through Stripe subscriptions (Free / Pro at R$49/month).
+Kyrios CRM is a multi-tenant SaaS platform for sales pipeline management targeting SMBs, freelancers, and sales teams. It provides a Kanban-style deal pipeline, lead/contact management, activity tracking, team collaboration via workspaces, and monetization through Stripe subscriptions (Free / Pro at R$49/month).
 
 Full PRD: [docs/PRD.md](docs/PRD.md)
 
@@ -111,7 +111,7 @@ STRIPE_PRO_PRICE_ID=
 RESEND_API_KEY=
 
 # App
-NEXT_PUBLIC_APP_URL=              # e.g. https://pipeflow.vercel.app
+NEXT_PUBLIC_APP_URL=              # e.g. https://kyrios-crm.vercel.app
 ```
 
 ---
@@ -120,7 +120,11 @@ NEXT_PUBLIC_APP_URL=              # e.g. https://pipeflow.vercel.app
 
 - **Inspiration:** Pipedrive (pipeline UX), HubSpot (clean SaaS shell)
 - **Tone:** Professional, minimal, action-oriented
-- **Colors:** Use shadcn/ui neutral base + a single brand accent (blue or indigo recommended)
+- **Colors:**
+  - Primary (brand): roxo escuro `#290042` — use `bg-primary`, `text-primary`, `brand-purple`
+  - Accent (highlight): ouro `#F4C430` — use `bg-accent`, `text-accent`, `brand-gold`
+  - Tailwind tokens: `brand-purple`, `brand-purple-light`, `brand-gold`, `brand-gold-light`
+  - CSS variables: `--brand-purple`, `--brand-gold`
 - **Typography:** Inter (system default via Tailwind/shadcn)
 - **Density:** Medium — cards with breathing room, sidebar navigation, top metric strip on dashboard
 
