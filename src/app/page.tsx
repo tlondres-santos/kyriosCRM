@@ -1,7 +1,17 @@
-export default function Home() {
+import { Navbar } from "@/components/landing/Navbar";
+import { Hero } from "@/components/landing/Hero";
+import { Features } from "@/components/landing/Features";
+import { Pricing } from "@/components/landing/Pricing";
+import { Footer } from "@/components/landing/Footer";
+
+export default function LandingPage() {
   return (
-    <main className="flex min-h-screen items-center justify-center">
-      <h1 className="text-2xl font-semibold text-foreground">Kyrios CRM</h1>
-    </main>
+    <div className="flex min-h-screen flex-col">
+      <Navbar />
+      <Hero />
+      <Features />
+      <Pricing />
+      <Footer />
+    </div>
   );
 }
