@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
@@ -43,10 +44,14 @@ export function SidebarContent({ onNavigate }: SidebarContentProps) {
     <div className="flex h-full flex-col bg-[#290042] text-white">
       {/* Logo */}
       <div className="flex h-16 items-center px-6">
-        <span className="text-xl font-bold tracking-tight">
-          Kyrios{" "}
-          <span className="text-[#F4C430]">CRM</span>
-        </span>
+        <Image
+          src="/logo.png"
+          alt="Kyrios CRM"
+          width={140}
+          height={52}
+          className="object-contain"
+          priority
+        />
       </div>
 
       <Separator className="bg-white/10" />
