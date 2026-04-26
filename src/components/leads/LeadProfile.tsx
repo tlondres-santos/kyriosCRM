@@ -35,7 +35,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { MOCK_OWNERS } from "@/lib/mock/leads";
+import { MOCK_LEADS, MOCK_OWNERS } from "@/lib/mock/leads";
 import type { Lead, LeadStatus } from "@/types";
 
 const STATUS_CONFIG: Record<LeadStatus, { label: string; className: string }> = {
@@ -110,8 +110,7 @@ export default function LeadProfile({ lead: initial }: LeadProfileProps) {
 
   function onEdit(data: EditValues) {
     const updatedOwner = MOCK_OWNERS.find((o) => o.id === data.owner_id);
-    setLead((prev) => ({
-      ...prev,
+    const updates = {
       ...data,
       email: data.email || null,
       phone: data.phone || null,
@@ -119,7 +118,10 @@ export default function LeadProfile({ lead: initial }: LeadProfileProps) {
       role: data.role || null,
       owner_id: data.owner_id || null,
       owner: updatedOwner ?? undefined,
-    }));
+    };
+    setLead((prev) => ({ ...prev, ...updates }));
+    const idx = MOCK_LEADS.findIndex((l) => l.id === lead.id);
+    if (idx !== -1) Object.assign(MOCK_LEADS[idx], updates);
     toast.success("Lead atualizado!");
     setEditOpen(false);
   }

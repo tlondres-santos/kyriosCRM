@@ -18,7 +18,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { MOCK_OWNERS } from "@/lib/mock/leads";
+import { MOCK_LEADS, MOCK_OWNERS } from "@/lib/mock/leads";
+import type { Lead } from "@/types";
 
 const schema = z.object({
   name: z.string().min(2, "Nome deve ter ao menos 2 caracteres"),
@@ -50,7 +51,21 @@ export default function NewLeadPage() {
   });
 
   function onSubmit(data: FormValues) {
-    console.log("New lead (mock):", data);
+    const owner = MOCK_OWNERS.find((o) => o.id === data.owner_id);
+    const newLead: Lead = {
+      id: `lead-${Date.now()}`,
+      workspace_id: "ws-1",
+      name: data.name,
+      email: data.email || null,
+      phone: data.phone || null,
+      company: data.company || null,
+      role: data.role || null,
+      status: data.status,
+      owner_id: data.owner_id || null,
+      created_at: new Date().toISOString(),
+      owner: owner ?? undefined,
+    };
+    MOCK_LEADS.unshift(newLead);
     toast.success("Lead criado com sucesso!");
     router.push("/leads");
   }
