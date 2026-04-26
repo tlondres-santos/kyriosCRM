@@ -12,16 +12,16 @@
 **Objective:** Bootstrap the Next.js 14 project with all tooling configured, folder structure in place, and the design system tokens ready so every subsequent milestone starts from a clean, consistent base.
 
 **Deliverables:**
-- [ ] `npx create-next-app@latest` with TypeScript, Tailwind, App Router, `src/` dir
-- [ ] Install and init shadcn/ui (`npx shadcn@latest init`)
-- [ ] Add core shadcn components: Button, Input, Label, Card, Badge, Avatar, Separator, Dropdown, Sheet, Tooltip, Dialog, Sonner (toast)
-- [ ] Install all dependencies: `@dnd-kit/core @dnd-kit/sortable recharts @supabase/ssr @supabase/supabase-js stripe resend @hookform/resolvers react-hook-form zod lucide-react`
-- [ ] Create full folder structure (`src/app`, `src/components/ui`, `src/components/kanban`, `src/components/leads`, `src/components/dashboard`, `src/lib`, `src/hooks`, `src/types`, `supabase/migrations`, `supabase/functions`, `docs`, `public`)
-- [ ] Configure `tailwind.config.ts` with brand accent color (indigo) and Inter font
-- [ ] Create `src/types/index.ts` with all domain types: `Workspace`, `Lead`, `Deal`, `Activity`, `Member`, `PipelineStage`, `Plan`
-- [ ] Configure `tsconfig.json` with `strict: true` and path alias `@/`
-- [ ] Create `.env.local.example` with all required env vars
-- [ ] Verify `tsc --noEmit` passes with zero errors
+- [X] `npx create-next-app@latest` with TypeScript, Tailwind, App Router, `src/` dir
+- [X] Install and init shadcn/ui (`npx shadcn@latest init`)
+- [X] Add core shadcn components: Button, Input, Label, Card, Badge, Avatar, Separator, Dropdown, Sheet, Tooltip, Dialog, Sonner (toast)
+- [X] Install all dependencies: `@dnd-kit/core @dnd-kit/sortable recharts @supabase/ssr @supabase/supabase-js stripe resend @hookform/resolvers react-hook-form zod lucide-react`
+- [X] Create full folder structure (`src/app`, `src/components/ui`, `src/components/kanban`, `src/components/leads`, `src/components/dashboard`, `src/lib`, `src/hooks`, `src/types`, `supabase/migrations`, `supabase/functions`, `docs`, `public`)
+- [X] Configure `tailwind.config.ts` with brand accent color (indigo) and Inter font
+- [X] Create `src/types/index.ts` with all domain types: `Workspace`, `Lead`, `Deal`, `Activity`, `Member`, `PipelineStage`, `Plan`
+- [X] Configure `tsconfig.json` with `strict: true` and path alias `@/`
+- [X] Create `.env.local.example` with all required env vars
+- [X] Verify `tsc --noEmit` passes with zero errors
 
 **Final commit:** `setup: initialize Next.js 14 project with shadcn/ui, full folder structure and domain types`
 
@@ -33,13 +33,13 @@
 **Objective:** Build the authenticated app layout — sidebar, topbar, workspace switcher, and responsive shell — so all feature UIs have a real frame to live in from milestone M04 onward.
 
 **Deliverables:**
-- [ ] `src/components/layout/Sidebar.tsx` — logo, nav links (Dashboard, Leads, Pipeline, Settings), workspace switcher dropdown (mock workspaces), user avatar + name at bottom
-- [ ] `src/components/layout/Topbar.tsx` — page title, global search input (UI only), notifications icon
-- [ ] `src/app/(app)/layout.tsx` — wraps all authenticated pages with Sidebar + Topbar
-- [ ] `src/app/(app)/page.tsx` — redirects to `/dashboard`
-- [ ] Active nav link highlight via `usePathname()`
-- [ ] Mobile-responsive: sidebar collapses to Sheet/drawer on small screens
-- [ ] Dark/light mode ready (shadcn CSS variables, no toggle needed yet)
+- [X] `src/components/layout/Sidebar.tsx` — logo, nav links (Dashboard, Leads, Pipeline, Settings), workspace switcher dropdown (mock workspaces), user avatar + name at bottom
+- [X] `src/components/layout/Topbar.tsx` — page title, global search input (UI only), notifications icon
+- [X] `src/app/(app)/layout.tsx` — wraps all authenticated pages with Sidebar + Topbar
+- [X] `src/app/(app)/page.tsx` — redirects to `/dashboard`
+- [X] Active nav link highlight via `usePathname()`
+- [X] Mobile-responsive: sidebar collapses to Sheet/drawer on small screens
+- [X] Dark/light mode ready (shadcn CSS variables, no toggle needed yet)
 
 **Final commit:** `feat: app shell with sidebar, topbar and workspace switcher UI`
 
@@ -51,14 +51,14 @@
 **Objective:** Deliver the public marketing page for Kyrios CRM — the first thing a visitor sees. No backend required.
 
 **Deliverables:**
-- [ ] `src/app/page.tsx` — public landing page (Server Component)
-- [ ] `src/components/landing/Hero.tsx` — headline, subline, CTA buttons (Start Free / See Demo)
-- [ ] `src/components/landing/Features.tsx` — 6-card grid: Pipeline Kanban, Gestão de Leads, Atividades, Dashboard, Multi-empresa, Planos acessíveis
-- [ ] `src/components/landing/Pricing.tsx` — Free vs Pro cards with feature lists and CTA
-- [ ] `src/components/landing/Footer.tsx` — links, copyright
-- [ ] `src/components/landing/Navbar.tsx` — logo, nav links, Login / Começar grátis buttons
-- [ ] Fully responsive (mobile-first)
-- [ ] `tsc --noEmit` passes
+- [X] `src/app/page.tsx` — public landing page (Server Component)
+- [X] `src/components/landing/Hero.tsx` — headline, subline, CTA buttons (Start Free / See Demo)
+- [X] `src/components/landing/Features.tsx` — 6-card grid: Pipeline Kanban, Gestão de Leads, Atividades, Dashboard, Multi-empresa, Planos acessíveis
+- [X] `src/components/landing/Pricing.tsx` — Free vs Pro cards with feature lists and CTA
+- [X] `src/components/landing/Footer.tsx` — links, copyright
+- [X] `src/components/landing/Navbar.tsx` — logo, nav links, Login / Começar grátis buttons
+- [X] Fully responsive (mobile-first)
+- [X] `tsc --noEmit` passes
 
 **Final commit:** `feat: landing page with hero, features, pricing and footer`
 
@@ -72,14 +72,14 @@
 **Objective:** Build all authentication screens (login, signup, password reset) as static forms. No Supabase wired yet — forms submit to `console.log`. Backend is added in M08.
 
 **Deliverables:**
-- [ ] `src/app/(auth)/layout.tsx` — centered card layout, logo
-- [ ] `src/app/(auth)/login/page.tsx` — email + password form, "Forgot password?" link, "Create account" link
-- [ ] `src/app/(auth)/signup/page.tsx` — name + email + password form, terms checkbox
-- [ ] `src/app/(auth)/forgot-password/page.tsx` — email form
-- [ ] `src/app/(auth)/reset-password/page.tsx` — new password form
-- [ ] All forms built with `react-hook-form` + `zod` validation (client-side)
-- [ ] Loading states and error message slots in place (ready for real errors in M08)
-- [ ] `tsc --noEmit` passes
+- [X] `src/app/(auth)/layout.tsx` — centered card layout, logo
+- [X] `src/app/(auth)/login/page.tsx` — email + password form, "Forgot password?" link, "Create account" link
+- [X] `src/app/(auth)/signup/page.tsx` — name + email + password form, terms checkbox
+- [X] `src/app/(auth)/forgot-password/page.tsx` — email form
+- [X] `src/app/(auth)/reset-password/page.tsx` — new password form
+- [X] All forms built with `react-hook-form` + `zod` validation (client-side)
+- [X] Loading states and error message slots in place (ready for real errors in M08)
+- [X] `tsc --noEmit` passes
 
 **Final commit:** `feat: auth pages UI — login, signup, password reset with form validation`
 
@@ -91,16 +91,16 @@
 **Objective:** Build the complete leads management UI — list, detail, create/edit — using mock data. Backend wired in M09.
 
 **Deliverables:**
-- [ ] `src/lib/mock/leads.ts` — 10 mock leads with all fields
-- [ ] `src/app/(app)/leads/page.tsx` — leads list: table with Name, Company, Status badge, Owner, Created date; search bar; status filter; "Novo Lead" button
-- [ ] `src/components/leads/LeadTable.tsx` — sortable table rows, row click navigates to detail
-- [ ] `src/components/leads/LeadFilters.tsx` — filter by status, owner, date range
-- [ ] `src/app/(app)/leads/new/page.tsx` — create lead form (name, email, phone, company, role, status, owner)
-- [ ] `src/app/(app)/leads/[id]/page.tsx` — lead detail: profile card + activity timeline
-- [ ] `src/components/leads/LeadProfile.tsx` — profile card with all fields + Edit / Delete actions
-- [ ] `src/components/leads/ActivityTimeline.tsx` — chronological list of mock activities with type icons (ligação, e-mail, reunião, nota)
-- [ ] `src/components/leads/ActivityForm.tsx` — inline "Add activity" form (type, description, date)
-- [ ] `tsc --noEmit` passes
+- [X] `src/lib/mock/leads.ts` — 10 mock leads with all fields
+- [X] `src/app/(app)/leads/page.tsx` — leads list: table with Name, Company, Status badge, Owner, Created date; search bar; status filter; "Novo Lead" button
+- [X] `src/components/leads/LeadTable.tsx` — sortable table rows, row click navigates to detail
+- [X] `src/components/leads/LeadFilters.tsx` — filter by status, owner, date range
+- [X] `src/app/(app)/leads/new/page.tsx` — create lead form (name, email, phone, company, role, status, owner)
+- [X] `src/app/(app)/leads/[id]/page.tsx` — lead detail: profile card + activity timeline
+- [X] `src/components/leads/LeadProfile.tsx` — profile card with all fields + Edit / Delete actions
+- [X] `src/components/leads/ActivityTimeline.tsx` — chronological list of mock activities with type icons (ligação, e-mail, reunião, nota)
+- [X] `src/components/leads/ActivityForm.tsx` — inline "Add activity" form (type, description, date)
+- [X] `tsc --noEmit` passes
 
 **Final commit:** `feat: leads UI — list, detail, create/edit and activity timeline with mock data`
 
@@ -385,11 +385,11 @@
 
 | # | Branch | Phase | Status |
 |---|---|---|---|
-| M01 | `setup/project-init` | Foundation | ⬜ |
-| M02 | `feat/app-shell-ui` | Foundation | ⬜ |
-| M03 | `feat/landing-page` | Foundation | ⬜ |
-| M04 | `feat/auth-ui` | Core UI | ⬜ |
-| M05 | `feat/leads-ui` | Core UI | ⬜ |
+| M01 | `setup/project-init` | Foundation | ✅ |
+| M02 | `feat/app-shell-ui` | Foundation | ✅ |
+| M03 | `feat/landing-page` | Foundation | ✅ |
+| M04 | `feat/auth-ui` | Core UI | ✅ |
+| M05 | `feat/leads-ui` | Core UI | ✅ |
 | M06 | `feat/pipeline-ui` | Core UI | ⬜ |
 | M07 | `feat/dashboard-ui` | Core UI | ⬜ |
 | M08 | `feat/settings-ui` | Core UI | ⬜ |
