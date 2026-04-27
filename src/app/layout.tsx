@@ -8,7 +8,6 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Kyrios CRM",
   description: "Gestão de pipeline de vendas para PMEs e times comerciais",
-  icons: { icon: "/favicon.png" },
 };
 
 export default function RootLayout({
