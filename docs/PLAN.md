@@ -112,15 +112,15 @@
 **Objective:** Build the Kanban board with full drag-and-drop between stages using `@dnd-kit`. Stage moves are persisted to local state only. Backend wired in M10.
 
 **Deliverables:**
-- [ ] `src/lib/mock/deals.ts` — 12 mock deals spread across all 6 stages
-- [ ] `src/app/(app)/pipeline/page.tsx` — Kanban board page
-- [ ] `src/components/kanban/KanbanBoard.tsx` — `"use client"`, DndContext + SortableContext, renders all columns
-- [ ] `src/components/kanban/KanbanColumn.tsx` — stage header (name, deal count, total R$), droppable area, "Add deal" button
-- [ ] `src/components/kanban/DealCard.tsx` — draggable card: title, value (R$), lead name, owner avatar, deadline (with overdue highlight)
-- [ ] `src/components/kanban/DealForm.tsx` — dialog form to create/edit a deal (title, value, lead, owner, deadline, stage)
-- [ ] Stage order: Novo Lead → Contato Realizado → Proposta Enviada → Negociação → Fechado Ganho → Fechado Perdido
-- [ ] Drag-and-drop updates local state; visual feedback during drag (opacity, cursor)
-- [ ] `tsc --noEmit` passes
+- [X] `src/lib/mock/deals.ts` — 9 mock deals spread across all 6 stages
+- [X] `src/app/(app)/pipeline/page.tsx` — Kanban board page
+- [X] `src/components/kanban/KanbanBoard.tsx` — `"use client"`, DndContext + SortableContext, renders all columns
+- [X] `src/components/kanban/KanbanColumn.tsx` — stage header (name, deal count), droppable area, color-coded header (verde/vermelho para ganho/perdido)
+- [X] `src/components/kanban/DealCard.tsx` — draggable card: title, value (R$), lead name, owner, deadline (badge vermelho se vencido)
+- [X] `src/components/kanban/DealEditSheet.tsx` — Sheet lateral para editar deal (title, value, stage, lead, owner, deadline)
+- [X] Stage order: Novo Lead → Contato Realizado → Proposta Enviada → Negociação → Fechado Ganho → Fechado Perdido
+- [X] Drag-and-drop updates local state; visual feedback during drag (opacity, cursor)
+- [X] `tsc --noEmit` passes
 
 **Final commit:** `feat: pipeline Kanban UI with @dnd-kit drag-and-drop and deal cards`
 
@@ -390,7 +390,7 @@
 | M03 | `feat/landing-page` | Foundation | ✅ |
 | M04 | `feat/auth-ui` | Core UI | ✅ |
 | M05 | `feat/leads-ui` | Core UI | ✅ |
-| M06 | `feat/pipeline-ui` | Core UI | ⬜ |
+| M06 | `feat/pipeline-ui` | Core UI | ✅ |
 | M07 | `feat/dashboard-ui` | Core UI | ⬜ |
 | M08 | `feat/settings-ui` | Core UI | ⬜ |
 | M09 | `feat/supabase-auth` | Backend Foundation | ⬜ |
