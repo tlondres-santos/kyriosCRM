@@ -1,3 +1,5 @@
+import { KanbanBoard } from "@/components/kanban/KanbanBoard";
+
 export default function PipelinePage() {
   return (
     <div className="space-y-6">
@@ -7,9 +9,7 @@ export default function PipelinePage() {
           Visualize e gerencie seus negócios no Kanban.
         </p>
       </div>
-      <div className="rounded-lg border border-dashed p-12 text-center text-muted-foreground">
-        Kanban de negócios em breve — M06
-      </div>
+      <KanbanBoard />
     </div>
   );
 }
