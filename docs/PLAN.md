@@ -132,13 +132,13 @@
 **Objective:** Build the dashboard with metric cards, funnel chart, and upcoming deals list using mock data. Backend wired in M12.
 
 **Deliverables:**
-- [ ] `src/lib/mock/metrics.ts` — mock metric values and funnel data
-- [ ] `src/app/(app)/dashboard/page.tsx` — dashboard page
-- [ ] `src/components/dashboard/MetricCards.tsx` — 4 cards: Total de Leads, Negócios Abertos, Valor do Pipeline (R$), Taxa de Conversão (%) — with trend arrows
-- [ ] `src/components/dashboard/FunnelChart.tsx` — `"use client"`, Recharts BarChart showing deal count per stage
-- [ ] `src/components/dashboard/UpcomingDeals.tsx` — list of deals with deadline in the next 7 days, with stage badge and value
-- [ ] Responsive grid layout (2-col → 4-col metric cards)
-- [ ] `tsc --noEmit` passes
+- [X] `src/lib/mock/metrics.ts` — mock metric values and funnel data
+- [X] `src/app/(app)/dashboard/page.tsx` — dashboard page
+- [X] `src/components/dashboard/MetricCards.tsx` — 4 cards: Total de Leads, Negócios Abertos, Valor do Pipeline (R$), Taxa de Conversão (%) — with trend arrows
+- [X] `src/components/dashboard/FunnelChart.tsx` — `"use client"`, Recharts BarChart showing deal count per stage
+- [X] `src/components/dashboard/UpcomingDeals.tsx` — list of deals with deadline in the next 7 days, with stage badge and value
+- [X] Responsive grid layout (2-col → 4-col metric cards)
+- [X] `tsc --noEmit` passes
 
 **Final commit:** `feat: dashboard UI with metric cards, funnel chart (Recharts) and upcoming deals`
 
