@@ -1,9 +1,12 @@
+"use client";
+
 import { Calendar } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import { MOCK_UPCOMING } from "@/lib/mock/metrics";
+import { MOCK_DEALS } from "@/lib/mock/deals";
 import { PIPELINE_STAGES } from "@/types";
+import { useWorkspace } from "@/contexts/WorkspaceContext";
 
 function formatCurrency(value: number) {
   return new Intl.NumberFormat("pt-BR", {
@@ -28,13 +31,23 @@ const STAGE_BADGE: Record<string, string> = {
 };
 
 export function UpcomingDeals() {
+  const { activeWorkspaceId } = useWorkspace();
+  const upcoming = MOCK_DEALS.filter((d) => d.workspace_id === activeWorkspaceId).filter(
+    (d) =>
+      d.deadline &&
+      d.stage !== "fechado_ganho" &&
+      d.stage !== "fechado_perdido"
+  )
+    .sort((a, b) => a.deadline!.localeCompare(b.deadline!))
+    .slice(0, 5);
+
   return (
     <Card>
       <CardHeader className="pb-2">
         <CardTitle className="text-base">Próximos Prazos</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        {MOCK_UPCOMING.map((deal) => {
+        {upcoming.map((deal) => {
           const stageLabel =
             PIPELINE_STAGES.find((s) => s.id === deal.stage)?.label ?? deal.stage;
           return (

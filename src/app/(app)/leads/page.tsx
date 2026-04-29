@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import LeadFilters from "@/components/leads/LeadFilters";
 import LeadTable from "@/components/leads/LeadTable";
 import { MOCK_LEADS } from "@/lib/mock/leads";
+import { useWorkspace } from "@/contexts/WorkspaceContext";
 import type { LeadStatus } from "@/types";
 
 export default function LeadsPage() {
@@ -15,10 +16,12 @@ export default function LeadsPage() {
   const [ownerId, setOwnerId] = useState<string | "all">("all");
   const [dateFrom, setDateFrom] = useState("");
   const [dateTo, setDateTo] = useState("");
+  const { activeWorkspaceId } = useWorkspace();
 
   const filtered = useMemo(() => {
     const term = search.toLowerCase();
     return MOCK_LEADS.filter((lead) => {
+      if (lead.workspace_id !== activeWorkspaceId) return false;
       if (
         term &&
         !lead.name.toLowerCase().includes(term) &&
@@ -32,7 +35,7 @@ export default function LeadsPage() {
       if (dateTo && lead.created_at > dateTo + "T23:59:59") return false;
       return true;
     });
-  }, [search, status, ownerId, dateFrom, dateTo]);
+  }, [search, status, ownerId, dateFrom, dateTo, activeWorkspaceId]);
 
   return (
     <div className="space-y-6">

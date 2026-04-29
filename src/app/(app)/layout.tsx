@@ -1,5 +1,10 @@
 import { AppShell } from "@/components/layout/AppShell";
+import { WorkspaceProvider } from "@/contexts/WorkspaceContext";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
-  return <AppShell>{children}</AppShell>;
+  return (
+    <WorkspaceProvider>
+      <AppShell>{children}</AppShell>
+    </WorkspaceProvider>
+  );
 }

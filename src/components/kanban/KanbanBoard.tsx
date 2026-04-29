@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import {
   DndContext,
   DragEndEvent,
@@ -16,14 +16,22 @@ import {
 import { sortableKeyboardCoordinates, arrayMove } from "@dnd-kit/sortable";
 import { PIPELINE_STAGES, type Deal, type PipelineStage } from "@/types";
 import { MOCK_DEALS } from "@/lib/mock/deals";
+import { useWorkspace } from "@/contexts/WorkspaceContext";
 import { KanbanColumn } from "./KanbanColumn";
 import { DealCard } from "./DealCard";
 import { DealEditSheet } from "./DealEditSheet";
 
 export function KanbanBoard() {
-  const [deals, setDeals] = useState<Deal[]>(MOCK_DEALS);
+  const { activeWorkspaceId } = useWorkspace();
+  const [deals, setDeals] = useState<Deal[]>(() =>
+    MOCK_DEALS.filter((d) => d.workspace_id === activeWorkspaceId)
+  );
   const [activeId, setActiveId] = useState<string | null>(null);
   const [editingDeal, setEditingDeal] = useState<Deal | null>(null);
+
+  useEffect(() => {
+    setDeals(MOCK_DEALS.filter((d) => d.workspace_id === activeWorkspaceId));
+  }, [activeWorkspaceId]);
 
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
@@ -55,6 +63,8 @@ export function KanbanBoard() {
       setDeals((prev) =>
         prev.map((d) => (d.id === activeId ? { ...d, stage: overStage } : d))
       );
+      const idx = MOCK_DEALS.findIndex((d) => d.id === activeId);
+      if (idx !== -1) MOCK_DEALS[idx] = { ...MOCK_DEALS[idx], stage: overStage };
       return;
     }
 
@@ -63,11 +73,15 @@ export function KanbanBoard() {
       setDeals((prev) =>
         prev.map((d) => (d.id === activeId ? { ...d, stage: overDeal.stage } : d))
       );
+      const idx = MOCK_DEALS.findIndex((d) => d.id === activeId);
+      if (idx !== -1) MOCK_DEALS[idx] = { ...MOCK_DEALS[idx], stage: overDeal.stage };
     }
   }
 
   function handleSaveDeal(updated: Deal) {
     setDeals((prev) => prev.map((d) => (d.id === updated.id ? updated : d)));
+    const idx = MOCK_DEALS.findIndex((d) => d.id === updated.id);
+    if (idx !== -1) MOCK_DEALS[idx] = updated;
   }
 
   function handleDragEnd({ active, over }: DragEndEvent) {
@@ -83,7 +97,9 @@ export function KanbanBoard() {
       const activeIndex = prev.findIndex((d) => d.id === activeId);
       const overIndex = prev.findIndex((d) => d.id === overId);
       if (activeIndex === -1 || overIndex === -1) return prev;
-      return arrayMove(prev, activeIndex, overIndex);
+      const next = arrayMove(prev, activeIndex, overIndex);
+      MOCK_DEALS.splice(0, MOCK_DEALS.length, ...next);
+      return next;
     });
   }
 

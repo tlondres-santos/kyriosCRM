@@ -1,8 +1,13 @@
+"use client";
+
 import type { ReactNode } from "react";
 import { Users, Briefcase, DollarSign, TrendingUp, ArrowUp, ArrowDown } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { MOCK_METRICS, MOCK_METRIC_TRENDS } from "@/lib/mock/metrics";
+import { MOCK_METRIC_TRENDS } from "@/lib/mock/metrics";
+import { MOCK_LEADS } from "@/lib/mock/leads";
+import { MOCK_DEALS } from "@/lib/mock/deals";
+import { useWorkspace } from "@/contexts/WorkspaceContext";
 
 function formatCurrency(value: number) {
   return new Intl.NumberFormat("pt-BR", {
@@ -46,35 +51,48 @@ function MetricCard({ title, value, icon, trendLabel, trendUp }: MetricCardProps
 }
 
 export function MetricCards() {
-  const m = MOCK_METRICS;
+  const { activeWorkspaceId } = useWorkspace();
+  const leads = MOCK_LEADS.filter((l) => l.workspace_id === activeWorkspaceId);
+  const deals = MOCK_DEALS.filter((d) => d.workspace_id === activeWorkspaceId);
+
+  const totalLeads = leads.length;
+  const openDeals = deals.filter(
+    (d) => d.stage !== "fechado_ganho" && d.stage !== "fechado_perdido"
+  ).length;
+  const pipelineValue = deals.filter(
+    (d) => d.stage !== "fechado_perdido"
+  ).reduce((sum, d) => sum + d.value, 0);
+  const won = deals.filter((d) => d.stage === "fechado_ganho").length;
+  const conversionRate =
+    deals.length > 0 ? Math.round((won / deals.length) * 100) : 0;
   const t = MOCK_METRIC_TRENDS;
 
   return (
     <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
       <MetricCard
         title="Total de Leads"
-        value={String(m.totalLeads)}
+        value={String(totalLeads)}
         icon={<Users className="h-5 w-5" />}
         trendLabel={`+${t.totalLeads.delta} leads`}
         trendUp={t.totalLeads.up}
       />
       <MetricCard
         title="Negócios Abertos"
-        value={String(m.openDeals)}
+        value={String(openDeals)}
         icon={<Briefcase className="h-5 w-5" />}
         trendLabel={`+${t.openDeals.delta} negócio`}
         trendUp={t.openDeals.up}
       />
       <MetricCard
         title="Valor do Pipeline"
-        value={formatCurrency(m.pipelineValue)}
+        value={formatCurrency(pipelineValue)}
         icon={<DollarSign className="h-5 w-5" />}
         trendLabel={`+${formatCurrency(t.pipelineValue.delta)}`}
         trendUp={t.pipelineValue.up}
       />
       <MetricCard
         title="Taxa de Conversão"
-        value={`${m.conversionRate}%`}
+        value={`${conversionRate}%`}
         icon={<TrendingUp className="h-5 w-5" />}
         trendLabel={`-${t.conversionRate.delta}%`}
         trendUp={t.conversionRate.up}
