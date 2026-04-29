@@ -36,6 +36,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { MOCK_LEADS, MOCK_OWNERS } from "@/lib/mock/leads";
+import { MOCK_DEALS } from "@/lib/mock/deals";
 import type { Lead, LeadStatus } from "@/types";
 
 const STATUS_CONFIG: Record<LeadStatus, { label: string; className: string }> = {
@@ -127,6 +128,10 @@ export default function LeadProfile({ lead: initial }: LeadProfileProps) {
   }
 
   function onDelete() {
+    const idx = MOCK_LEADS.findIndex((l) => l.id === lead.id);
+    if (idx !== -1) MOCK_LEADS.splice(idx, 1);
+    const dealIdx = MOCK_DEALS.findIndex((d) => d.lead_id === lead.id);
+    if (dealIdx !== -1) MOCK_DEALS.splice(dealIdx, 1);
     toast.success("Lead removido!");
     setDeleteOpen(false);
     router.push("/leads");

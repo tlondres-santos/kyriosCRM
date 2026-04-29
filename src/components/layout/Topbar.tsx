@@ -1,9 +1,10 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { Menu, Bell, Search } from "lucide-react";
+import { Menu, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { NotificationsBell } from "./NotificationsBell";
 
 const pageTitles: Record<string, string> = {
   "/dashboard": "Dashboard",
@@ -55,11 +56,7 @@ export function Topbar({ onMenuClick }: TopbarProps) {
           />
         </div>
 
-        {/* Notifications */}
-        <Button variant="ghost" size="icon" className="relative">
-          <Bell className="h-5 w-5" />
-          <span className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-[#F4C430]" />
-        </Button>
+        <NotificationsBell />
       </div>
     </header>
   );

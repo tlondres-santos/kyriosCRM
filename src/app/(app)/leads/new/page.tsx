@@ -19,7 +19,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { MOCK_LEADS, MOCK_OWNERS } from "@/lib/mock/leads";
-import type { Lead } from "@/types";
+import { MOCK_DEALS } from "@/lib/mock/deals";
+import type { Deal, Lead } from "@/types";
 
 const schema = z.object({
   name: z.string().min(2, "Nome deve ter ao menos 2 caracteres"),
@@ -66,6 +67,22 @@ export default function NewLeadPage() {
       owner: owner ?? undefined,
     };
     MOCK_LEADS.unshift(newLead);
+
+    const newDeal: Deal = {
+      id: `deal-${Date.now()}`,
+      workspace_id: "ws-1",
+      title: data.company ? `${data.name} — ${data.company}` : data.name,
+      value: 0,
+      stage: "novo_lead",
+      lead_id: newLead.id,
+      owner_id: newLead.owner_id,
+      deadline: null,
+      created_at: newLead.created_at,
+      lead: { id: newLead.id, name: newLead.name, company: newLead.company },
+      owner: owner ? { id: owner.id, full_name: owner.full_name, avatar_url: owner.avatar_url } : undefined,
+    };
+    MOCK_DEALS.unshift(newDeal);
+
     toast.success("Lead criado com sucesso!");
     router.push("/leads");
   }

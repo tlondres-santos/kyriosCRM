@@ -150,15 +150,37 @@
 **Objective:** Build all settings pages — workspace info, team members, invite form, and billing/plan UI — as static shells. Functional backends added in M13 and M14.
 
 **Deliverables:**
-- [ ] `src/app/(app)/settings/layout.tsx` — settings sub-navigation (Workspace, Team, Billing)
-- [ ] `src/app/(app)/settings/workspace/page.tsx` — workspace name + logo form (static)
-- [ ] `src/app/(app)/settings/team/page.tsx` — members table (name, email, role badge, Remove action); "Invite Member" button opens dialog
-- [ ] `src/components/settings/InviteDialog.tsx` — email input + role selector (Admin/Member), Send Invite button
-- [ ] `src/app/(app)/settings/billing/page.tsx` — current plan card (Free/Pro), usage bars (members used / leads used), Upgrade / Manage Subscription CTA buttons
-- [ ] `src/components/settings/PlanCard.tsx` — plan details, feature list, CTA
-- [ ] `tsc --noEmit` passes
+- [X] `src/app/(app)/settings/layout.tsx` — settings sub-navigation (Workspace, Team, Billing)
+- [X] `src/app/(app)/settings/workspace/page.tsx` — workspace name + logo form (static)
+- [X] `src/app/(app)/settings/team/page.tsx` — members table (name, email, role badge, Remove action); "Invite Member" button opens dialog
+- [X] `src/components/settings/InviteDialog.tsx` — email input + role selector (Admin/Member), Send Invite button
+- [X] `src/app/(app)/settings/billing/page.tsx` — exibe banner "Acesso Antecipado — todos os recursos liberados" para os primeiros 50 workspaces; demais usuários veem current plan card (Free/Pro), usage bars (members used / leads used), Upgrade / Manage Subscription CTA buttons
+- [X] `src/components/settings/PlanCard.tsx` — plan details, feature list, CTA
+- [X] `src/components/settings/EarlyAccessBanner.tsx` — banner informativo de acesso antecipado (estático por ora, conectado ao `workspace_number` no M15)
+- [X] `tsc --noEmit` passes
 
 **Final commit:** `feat: settings UI — workspace, team management and billing pages`
+
+---
+
+## Phase 2-A — Platform Admin (Mock UI)
+
+### M-A · Super Admin Panel UI
+**Branch:** `feat/admin-panel-ui`
+
+**Objective:** Build a platform-level admin panel (accessible only to the SaaS operator) that shows all workspaces, their plans, usage, and member/lead counts. Completely separate from the tenant app shell. Backend (service-role queries, `is_platform_admin` flag) wired after M09.
+
+**Deliverables:**
+- [X] `src/lib/mock/admin.ts` — 3 mock workspaces with members, leads, deals counts and plan info
+- [X] `src/app/admin/layout.tsx` — admin shell: distinct dark topbar with "Platform Admin" badge, sidebar with Overview / Workspaces links; visually separated from tenant app
+- [X] `src/app/admin/page.tsx` — redirects to `/admin/overview`
+- [X] `src/app/admin/overview/page.tsx` — platform metric cards (total workspaces, total users, total leads, MRR) + workspaces table with plan badge, member/lead counts and quick-access link
+- [X] `src/app/admin/workspaces/[id]/page.tsx` — workspace detail: info card, members list, leads list, deals summary — all from mock data
+- [X] `src/components/admin/AdminMetricCards.tsx` — 4 platform-level metric cards
+- [X] `src/components/admin/WorkspacesTable.tsx` — sortable table of all workspaces
+- [X] `tsc --noEmit` passes
+
+**Final commit:** `feat: platform super-admin panel UI — overview, workspaces list and detail (mock data)`
 
 ---
 
@@ -176,7 +198,7 @@
 - [ ] `src/middleware.ts` — session refresh on every request, redirect unauthenticated users from `(app)` routes to `/login`
 - [ ] Migration `001_core_schema.sql`:
   - `profiles` table (id, full_name, avatar_url) linked to `auth.users`
-  - `workspaces` table (id, name, slug, plan, stripe_customer_id, stripe_subscription_id)
+  - `workspaces` table (id, name, slug, plan, stripe_customer_id, stripe_subscription_id, workspace_number serial único — sequencial de criação, base para identificar primeiros 50)
   - `workspace_members` table (workspace_id, user_id, role)
   - RLS: users can only read/write their own workspaces via membership
   - Trigger: auto-insert `profiles` row on `auth.users` insert
@@ -306,7 +328,7 @@
 ### M15 · Monetization (Stripe)
 **Branch:** `feat/stripe`
 
-**Objective:** Integrate Stripe Checkout for Pro plan upgrade, handle subscription lifecycle via webhook Edge Function, enforce Free plan limits.
+**Objective:** Integrate Stripe Checkout for Pro plan upgrade, handle subscription lifecycle via webhook Edge Function, and preparar a estrutura de limites de plano — sem ativá-los para os primeiros 50 workspaces (Acesso Antecipado).
 
 **Deliverables:**
 - [ ] `src/lib/stripe/client.ts` — Stripe SDK instance
@@ -318,15 +340,16 @@
   - Verifies Stripe signature
   - `checkout.session.completed` → set `workspaces.plan = 'pro'`, store `stripe_customer_id` + `stripe_subscription_id`
   - `customer.subscription.deleted` → set `workspaces.plan = 'free'`, clear subscription fields
-- [ ] `settings/billing/page.tsx` — Upgrade button calls `/api/stripe/create-checkout`; Manage button calls `/api/stripe/create-portal`
-- [ ] Plan limit enforcement:
-  - `src/lib/limits.ts` — `checkLeadLimit(workspaceId)`, `checkMemberLimit(workspaceId)` — return `{ allowed: boolean, current: number, max: number }`
-  - Block lead creation if Free plan and leads ≥ 50 (show upgrade prompt)
-  - Block invite if Free plan and members ≥ 2 (show upgrade prompt)
-- [ ] Usage bars in `settings/billing/page.tsx` wired to real counts
+- [ ] `settings/billing/page.tsx` — Upgrade button calls `/api/stripe/create-checkout`; Manage button calls `/api/stripe/create-portal`; exibe `EarlyAccessBanner` se `workspace_number <= EARLY_ACCESS_LIMIT`
+- [ ] Plan limit enforcement com lógica de Acesso Antecipado:
+  - `src/lib/limits.ts` — constante `EARLY_ACCESS_LIMIT = 50`; funções `checkLeadLimit(workspaceId)` e `checkMemberLimit(workspaceId)` retornam `{ allowed: true }` automaticamente se `workspace_number <= EARLY_ACCESS_LIMIT`; para demais workspaces aplicam os limites normais (Free: máx 50 leads, máx 2 membros)
+  - Block lead creation if Free plan and leads ≥ 50 (show upgrade prompt) — apenas para workspaces fora do Acesso Antecipado
+  - Block invite if Free plan and members ≥ 2 (show upgrade prompt) — apenas para workspaces fora do Acesso Antecipado
+  - Para ativar cobrança total: alterar `EARLY_ACCESS_LIMIT = 0`
+- [ ] Usage bars in `settings/billing/page.tsx` wired to real counts (ocultas para usuários em Acesso Antecipado)
 - [ ] `tsc --noEmit` passes
 
-**Final commit:** `feat: Stripe integration — Pro checkout, Customer Portal, webhook Edge Function and plan limits`
+**Final commit:** `feat: Stripe integration — Pro checkout, Customer Portal, webhook Edge Function and early access limit bypass`
 
 ---
 
@@ -392,7 +415,8 @@
 | M05 | `feat/leads-ui` | Core UI | ✅ |
 | M06 | `feat/pipeline-ui` | Core UI | ✅ |
 | M07 | `feat/dashboard-ui` | Core UI | ⬜ |
-| M08 | `feat/settings-ui` | Core UI | ⬜ |
+| M08 | `feat/settings-ui` | Core UI | ✅ |
+| M-A | `feat/admin-panel-ui` | Platform Admin | ✅ |
 | M09 | `feat/supabase-auth` | Backend Foundation | ⬜ |
 | M10 | `feat/leads-backend` | Feature Backends | ⬜ |
 | M11 | `feat/pipeline-backend` | Feature Backends | ⬜ |

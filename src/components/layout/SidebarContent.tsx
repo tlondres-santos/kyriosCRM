@@ -12,7 +12,6 @@ import {
   Building2,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,6 +19,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Separator } from "@/components/ui/separator";
+import { UserMenu } from "./UserMenu";
+import { useWorkspace } from "@/contexts/WorkspaceContext";
+import { Check } from "lucide-react";
 
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -28,17 +30,13 @@ const navItems = [
   { href: "/settings", label: "Configurações", icon: Settings },
 ];
 
-const mockWorkspaces = [
-  { id: "1", name: "Minha Empresa" },
-  { id: "2", name: "Cliente Alpha" },
-];
-
 interface SidebarContentProps {
   onNavigate?: () => void;
 }
 
 export function SidebarContent({ onNavigate }: SidebarContentProps) {
   const pathname = usePathname();
+  const { workspaces, activeWorkspace, setActiveWorkspaceId } = useWorkspace();
 
   return (
     <div className="flex h-full flex-col bg-[#290042] text-white">
@@ -61,12 +59,21 @@ export function SidebarContent({ onNavigate }: SidebarContentProps) {
         <DropdownMenu>
           <DropdownMenuTrigger className="flex w-full items-center gap-2 rounded-md px-2 py-2 text-sm text-white/80 transition-colors hover:bg-white/10 hover:text-white outline-none">
             <Building2 className="h-4 w-4 shrink-0" />
-            <span className="flex-1 truncate text-left">Minha Empresa</span>
+            <span className="flex-1 truncate text-left">{activeWorkspace.name}</span>
             <ChevronDown className="h-3 w-3 shrink-0 opacity-60" />
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-56" align="start">
-            {mockWorkspaces.map((ws) => (
-              <DropdownMenuItem key={ws.id}>{ws.name}</DropdownMenuItem>
+            {workspaces.map((ws) => (
+              <DropdownMenuItem
+                key={ws.id}
+                onClick={() => setActiveWorkspaceId(ws.id)}
+                className="flex items-center justify-between"
+              >
+                <span>{ws.name}</span>
+                {ws.id === activeWorkspace.id && (
+                  <Check className="h-3.5 w-3.5 text-primary" />
+                )}
+              </DropdownMenuItem>
             ))}
           </DropdownMenuContent>
         </DropdownMenu>
@@ -100,18 +107,7 @@ export function SidebarContent({ onNavigate }: SidebarContentProps) {
 
       <Separator className="bg-white/10" />
 
-      {/* User profile */}
-      <div className="flex items-center gap-3 px-6 py-4">
-        <Avatar className="h-8 w-8">
-          <AvatarFallback className="bg-[#F4C430] text-[#290042] text-xs font-bold">
-            U
-          </AvatarFallback>
-        </Avatar>
-        <div className="min-w-0 flex-1">
-          <p className="truncate text-sm font-medium text-white">Usuário</p>
-          <p className="truncate text-xs text-white/50">usuario@email.com</p>
-        </div>
-      </div>
+      <UserMenu />
     </div>
   );
 }
